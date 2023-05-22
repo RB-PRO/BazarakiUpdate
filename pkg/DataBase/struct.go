@@ -1,8 +1,5 @@
 package database
 
-type bd struct {
-}
-
-func New() (*bd, error) {
-	return &bd{}, nil
+// Структура, которая будет добавляться в Базу данных
+type Data struct {
 }
