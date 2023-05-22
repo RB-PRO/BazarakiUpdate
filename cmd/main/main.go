@@ -1,7 +1,7 @@
 package main
 
-import parsing "github.com/RB-PRO/BazarakiUpdate/internal/Parsing"
+import app "github.com/RB-PRO/BazarakiUpdate/internal/App"
 
 func main() {
-	parsing.ParsePages()
+	app.Start()
 }
