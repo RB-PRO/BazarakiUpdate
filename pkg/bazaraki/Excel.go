@@ -1,4 +1,4 @@
-package parsing
+package bazaraki
 
 import (
 	"fmt"
@@ -6,12 +6,11 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/RB-PRO/BazarakiUpdate/pkg/bazaraki"
 	"github.com/xuri/excelize/v2"
 )
 
 // Сохранить результаты в Excel
-func SaveXlsx(PagesResult []bazaraki.ResultsPage) error {
+func SaveXlsx(PagesResult []ResultsPage) error {
 	file := excelize.NewFile()
 	headers := []string{"ID", "Название", "Ссылка", "Площадь", "Цена", "Дата создания объявления"}
 	SheetName := "Sheet1"

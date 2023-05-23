@@ -18,7 +18,7 @@ func ParsePages() {
 	fmt.Println(len(Pages))
 
 	// Сохраняем данные в xlsx
-	ErrorSave := SaveXlsx(Pages)
+	ErrorSave := bazaraki.SaveXlsx(Pages)
 	if ErrorSave != nil {
 		panic(ErrorSave)
 	}
