@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
 
 // Пропарсить все страницы и вернуть список всех массив страниц
-func Pages() (PagesResult []ResultsPage, ErrorPages error) {
+func Pages(waits int) (PagesResult []ResultsPage, ErrorPages error) {
 	var IsNext bool = true                // Переменная, которая определяет, будет ли парситься следующая страница
 	for PageInt := 1; IsNext; PageInt++ { // Цикл по всем-всем страницам
 
@@ -22,6 +23,8 @@ func Pages() (PagesResult []ResultsPage, ErrorPages error) {
 		PagesResult = append(PagesResult, TecalPages.Results...)
 
 		IsNext = IsNextTecal // Записать результат переменной, которая отвечает за продолжение парсинга страничек
+
+		time.Sleep(time.Duration(waits) * time.Second)
 	}
 
 	return PagesResult, nil

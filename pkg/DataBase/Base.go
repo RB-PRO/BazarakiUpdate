@@ -11,23 +11,17 @@ type DB struct {
 	*sql.DB
 }
 
-func New(filename string) (*DB, error) {
-
-	// Загрузить данные из файла
-	DataDB, LoadFile := dataFile(filename)
-	if LoadFile != nil {
-		return &DB{}, LoadFile
-	}
+func New(DataDB string) (*DB, error) {
 
 	// Поднять соединение с БД
 	dbConn, ErrorOpenDB := sql.Open("mysql", DataDB)
 	if ErrorOpenDB != nil {
-		return &DB{}, errors.Join(errors.New("Open:"), ErrorOpenDB)
+		return &DB{}, errors.Join(errors.New("open:"), ErrorOpenDB)
 	}
 
 	ErrorPing := dbConn.Ping()
 	if ErrorPing != nil {
-		return &DB{}, errors.Join(errors.New("Ping:"), ErrorPing)
+		return &DB{}, errors.Join(errors.New("ping:"), ErrorPing)
 	}
 
 	return &DB{dbConn}, nil

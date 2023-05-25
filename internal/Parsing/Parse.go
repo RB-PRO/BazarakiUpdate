@@ -11,7 +11,7 @@ import (
 func ParsePages() {
 
 	// Парсим все страницы
-	Pages, ErrorPage := bazaraki.Pages()
+	Pages, ErrorPage := bazaraki.Pages(0)
 	if ErrorPage != nil {
 		panic(ErrorPage)
 	}

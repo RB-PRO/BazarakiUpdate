@@ -4,5 +4,4 @@ package database
 func (db *DB) Delete(id int) error {
 	_, err := db.Exec("delete from bazarakiLis where ID = ?", id)
 	return err
-
 }

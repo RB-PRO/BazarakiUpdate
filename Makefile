@@ -1,7 +1,7 @@
 all: run
 
 run:
-	go run cmd/main/main.go
+	go run cmd/main/main.go bd token -848128665
 
 push:
 	git push git@github.com:RB-PRO/BazarakiUpdate.git
@@ -15,4 +15,4 @@ push-car:
 	export CGO_ENABLED=0
 	go env GOOS GOARCH CGO_ENABLED
 	go build -o main ./cmd/main/main.go
-	scp main bd root root@185.154.192.111:go/
+	scp main bd token root@185.154.192.111:go/

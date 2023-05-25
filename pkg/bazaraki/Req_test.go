@@ -22,7 +22,7 @@ func TestPageOne(t *testing.T) {
 }
 
 func TestPages(t *testing.T) {
-	Pages, ErrorPage := bazaraki.Pages()
+	Pages, ErrorPage := bazaraki.Pages(0)
 	if ErrorPage != nil {
 		t.Error(ErrorPage)
 	}
