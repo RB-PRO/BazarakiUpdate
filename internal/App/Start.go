@@ -86,7 +86,7 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 		if NewP, DelP, UpdP, IsEqual := Checking(&MainBase, NewBase); IsEqual {
 			if len(NewP) != 0 {
 				for _, ads := range NewP {
-					Message := fmt.Sprintf("Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv%d_%s/", ads.ID, ads.Price, ads.ID, ads.Slug)
+					Message := fmt.Sprintf("Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", ads.ID, ads.Price, ads.ID, ads.Slug)
 					log.Println(Message)
 					notif.Sends(Message)
 					DB.Incert(NewP2Data(ads))
@@ -94,7 +94,7 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 			}
 			if len(DelP) != 0 {
 				for _, ads := range DelP {
-					Message := fmt.Sprintf("Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv%d_%s/", ads.ID, ads.Price, ads.ID, ads.Slug)
+					Message := fmt.Sprintf("Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", ads.ID, ads.Price, ads.ID, ads.Slug)
 					log.Println(Message)
 					notif.Sends(Message)
 					DB.Delete(ads.ID)
@@ -102,7 +102,7 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 			}
 			if len(UpdP) != 0 {
 				for _, ads := range UpdP {
-					Message := fmt.Sprintf("Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv%d_%s/", ads.ID, ads.Price, ads.ID, ads.Slug)
+					Message := fmt.Sprintf("Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", ads.ID, ads.Price, ads.ID, ads.Slug)
 					log.Println(Message)
 					notif.Sends(Message)
 					DB.UpdatePrice(ads.ID, ads.Price)
