@@ -8,7 +8,7 @@ import (
 
 // Прпоарсить одну страницу
 func TestPageOne(t *testing.T) {
-	Pages, IsNext, ErrorPageOne := bazaraki.PageOne(1)
+	Pages, IsNext, ErrorPageOne := bazaraki.PageOne(1, 2408, 125)
 	if ErrorPageOne != nil {
 		t.Error(ErrorPageOne)
 	}
@@ -22,7 +22,7 @@ func TestPageOne(t *testing.T) {
 }
 
 func TestPages(t *testing.T) {
-	Pages, ErrorPage := bazaraki.Pages(0)
+	Pages, ErrorPage := bazaraki.Pages(1, []int{2408, 2405})
 	if ErrorPage != nil {
 		t.Error(ErrorPage)
 	}

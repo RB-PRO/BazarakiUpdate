@@ -15,4 +15,4 @@ push-car:
 	export CGO_ENABLED=0
 	go env GOOS GOARCH CGO_ENABLED
 	go build -o main ./cmd/main/main.go
-	scp main bd token root@185.154.192.111:go/
+	scp main bd token root root@185.154.192.111:go/

@@ -9,33 +9,41 @@ import (
 )
 
 // Пропарсить все страницы и вернуть список всех массив страниц
-func Pages(waits int) (PagesResult []ResultsPage, ErrorPages error) {
-	var IsNext bool = true                // Переменная, которая определяет, будет ли парситься следующая страница
-	for PageInt := 1; IsNext; PageInt++ { // Цикл по всем-всем страницам
-
-		// Пропарсить страницу
-		TecalPages, IsNextTecal, ErrorPageOne := PageOne(PageInt)
-		if ErrorPageOne != nil {
-			return nil, ErrorPageOne
+// На вход принимаем задержку между запросами и массив категорий
+func Pages(WaintSeconds int, Rubrics []int) (PagesResult []ResultsPage, ErrorPages error) {
+	for _, rubric := range Rubrics {
+		c, ErrorParseC := CAds(rubric) // Пропарсить параметр "c"
+		if ErrorParseC != nil {
+			return nil, ErrorParseC
 		}
+		var IsNext bool = true                // Переменная, которая определяет, будет ли парситься следующая страница
+		for PageInt := 1; IsNext; PageInt++ { // Цикл по всем-всем страницам
 
-		// Добавть результатыв слайс, который далее вернётся
-		PagesResult = append(PagesResult, TecalPages.Results...)
+			// Пропарсить страницу
+			TecalPages, IsNextTecal, ErrorPageOne := PageOne(PageInt, rubric, c)
+			if ErrorPageOne != nil {
+				return nil, ErrorPageOne
+			}
 
-		IsNext = IsNextTecal // Записать результат переменной, которая отвечает за продолжение парсинга страничек
+			// Добавть результатыв слайс, который далее вернётся
+			PagesResult = append(PagesResult, TecalPages.Results...)
 
-		time.Sleep(time.Duration(waits) * time.Second)
+			IsNext = IsNextTecal // Записать результат переменной, которая отвечает за продолжение парсинга страничек
+
+			time.Sleep(time.Duration(WaintSeconds) * time.Second)
+		}
 	}
-
 	return PagesResult, nil
 
 }
 
 // Спарсить одну страницу и вернуть ответ
-func PageOne(PageInt int) (Page, bool, error) {
+func PageOne(PageInt, rubric, c int) (Page, bool, error) {
+	url := fmt.Sprintf(PageURL, rubric, PageInt, c)
+	// fmt.Println(url)
 
 	// Выполнить запрос
-	Response, ErrorGet := http.Get(fmt.Sprintf(PageURL, PageInt))
+	Response, ErrorGet := http.Get(url)
 	if ErrorGet != nil {
 		return Page{}, false, ErrorGet
 	}

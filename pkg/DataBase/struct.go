@@ -9,5 +9,6 @@ type Data struct {
 	Link       string    `json:"link"`        // Ссылка на преложение
 	Area       float64   `json:"area"`        // Площадь
 	Price      float64   `json:"price"`       // Цена
+	Rubric     int       `json:"rubric"`      // Категория
 	TimeCreate time.Time `json:"time_create"` // Дата создания
 }

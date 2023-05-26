@@ -1,7 +1,7 @@
 package bazaraki
 
 // Ссылка на страницы по определённым фильтрам
-const PageURL string = "https://www.bazaraki.com/api/items/?rubric=2405&c=125&page=%d&ordering=&q=&attrs__area_min=50&attrs__area_max=250&lat=34.50498196022126&lng=33.14846821577484&radius=30000"
+const PageURL string = "https://www.bazaraki.com/api/items/?rubric=%d&page=%d&c=%d&ordering=&q=&attrs__area_min=50&attrs__area_max=250&lat=34.50498196022126&lng=33.14846821577484&radius=30000"
 
 type Page struct {
 	Count    int           `json:"count"`
@@ -77,80 +77,4 @@ type ResultsPage struct {
 	NewToOrderLabel bool   `json:"new_to_order_label"`
 	PriceFrom       bool   `json:"price_from"`
 	PriceShort      string `json:"price_short"`
-	// Attrs0          struct {
-	// 	AttrsArea             int    `json:"attrs__area"`
-	// 	AttrsType             string `json:"attrs__type"`
-	// 	AttrsCondition        int    `json:"attrs__condition"`
-	// 	AttrsPlotArea         int    `json:"attrs__plot-area"`
-	// 	AttrsConstructionYear int    `json:"attrs__construction-year"`
-	// 	AttrsEnergyEfficiency int    `json:"attrs__energy-efficiency"`
-	// 	AttrsSquareMeterPrice string `json:"attrs__square-meter-price"`
-	// } `json:"attrs,omitempty"`
-	// Attrs1 struct {
-	// 	AttrsArea             int    `json:"attrs__area"`
-	// 	AttrsType             string `json:"attrs__type"`
-	// 	AttrsCondition        int    `json:"attrs__condition"`
-	// 	AttrsMustHaves        []int  `json:"attrs__must-haves"`
-	// 	AttrsConstructionYear int    `json:"attrs__construction-year"`
-	// 	AttrsEnergyEfficiency int    `json:"attrs__energy-efficiency"`
-	// 	AttrsSquareMeterPrice string `json:"attrs__square-meter-price"`
-	// } `json:"attrs,omitempty"`
-	// Attrs2 struct {
-	// 	AttrsArea             int    `json:"attrs__area"`
-	// 	AttrsType             string `json:"attrs__type"`
-	// 	AttrsCondition        int    `json:"attrs__condition"`
-	// 	AttrsPostalcode       int    `json:"attrs__postalcode"`
-	// 	AttrsOnlineViewing    int    `json:"attrs__online-viewing"`
-	// 	AttrsEnergyEfficiency int    `json:"attrs__energy-efficiency"`
-	// 	AttrsSquareMeterPrice string `json:"attrs__square-meter-price"`
-	// } `json:"attrs,omitempty"`
-	// Attrs3 struct {
-	// 	AttrsArea             int    `json:"attrs__area"`
-	// 	AttrsType             string `json:"attrs__type"`
-	// 	AttrsCondition        int    `json:"attrs__condition"`
-	// 	AttrsPostalcode       int    `json:"attrs__postalcode"`
-	// 	AttrsOnlineViewing    int    `json:"attrs__online-viewing"`
-	// 	AttrsEnergyEfficiency int    `json:"attrs__energy-efficiency"`
-	// 	AttrsSquareMeterPrice string `json:"attrs__square-meter-price"`
-	// } `json:"attrs,omitempty"`
-	// Attrs4 struct {
-	// 	AttrsArea             int    `json:"attrs__area"`
-	// 	AttrsType             string `json:"attrs__type"`
-	// 	AttrsCondition        int    `json:"attrs__condition"`
-	// 	AttrsMustHaves        []int  `json:"attrs__must-haves"`
-	// 	AttrsEnergyEfficiency int    `json:"attrs__energy-efficiency"`
-	// 	AttrsSquareMeterPrice string `json:"attrs__square-meter-price"`
-	// } `json:"attrs,omitempty"`
-	// Attrs5 struct {
-	// 	AttrsArea             int    `json:"attrs__area"`
-	// 	AttrsCondition        int    `json:"attrs__condition"`
-	// 	AttrsEnergyEfficiency int    `json:"attrs__energy-efficiency"`
-	// 	AttrsSquareMeterPrice string `json:"attrs__square-meter-price"`
-	// } `json:"attrs,omitempty"`
-	// Attrs6 struct {
-	// 	AttrsArea             int    `json:"attrs__area"`
-	// 	AttrsType             string `json:"attrs__type"`
-	// 	AttrsCondition        int    `json:"attrs__condition"`
-	// 	AttrsMustHaves        []int  `json:"attrs__must-haves"`
-	// 	AttrsEnergyEfficiency int    `json:"attrs__energy-efficiency"`
-	// 	AttrsSquareMeterPrice string `json:"attrs__square-meter-price"`
-	// } `json:"attrs,omitempty"`
-	// Attrs7 struct {
-	// 	AttrsArea             int    `json:"attrs__area"`
-	// 	AttrsType             string `json:"attrs__type"`
-	// 	AttrsCondition        int    `json:"attrs__condition"`
-	// 	AttrsMustHaves        []int  `json:"attrs__must-haves"`
-	// 	AttrsConstructionYear int    `json:"attrs__construction-year"`
-	// 	AttrsEnergyEfficiency int    `json:"attrs__energy-efficiency"`
-	// 	AttrsSquareMeterPrice string `json:"attrs__square-meter-price"`
-	// } `json:"attrs,omitempty"`
-	// Attrs8 struct {
-	// 	AttrsArea             int    `json:"attrs__area"`
-	// 	AttrsType             string `json:"attrs__type"`
-	// 	AttrsCondition        int    `json:"attrs__condition"`
-	// 	AttrsMustHaves        []int  `json:"attrs__must-haves"`
-	// 	AttrsEnergyEfficiency int    `json:"attrs__energy-efficiency"`
-	// 	AttrsSquareMeterPrice string `json:"attrs__square-meter-price"`
-	// } `json:"attrs,omitempty"`
-
 }

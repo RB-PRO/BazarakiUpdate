@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"errors"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -16,12 +15,12 @@ func New(DataDB string) (*DB, error) {
 	// Поднять соединение с БД
 	dbConn, ErrorOpenDB := sql.Open("mysql", DataDB)
 	if ErrorOpenDB != nil {
-		return &DB{}, errors.Join(errors.New("open:"), ErrorOpenDB)
+		return &DB{}, ErrorOpenDB
 	}
 
 	ErrorPing := dbConn.Ping()
 	if ErrorPing != nil {
-		return &DB{}, errors.Join(errors.New("ping:"), ErrorPing)
+		return &DB{}, ErrorPing
 	}
 
 	return &DB{dbConn}, nil

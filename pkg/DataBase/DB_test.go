@@ -23,6 +23,7 @@ func TestDB(t *testing.T) {
 		Link:       "Link",
 		Area:       100.0,
 		Price:      200.0,
+		Rubric:     123123,
 		TimeCreate: time.Date(2023, time.May, 23, 15, 30, 45, 0, time.UTC),
 	}
 

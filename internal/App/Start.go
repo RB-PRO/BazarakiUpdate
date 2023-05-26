@@ -71,7 +71,7 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 		log.Println("Проверка")
 
 		// Парсим все страницы
-		NewBase, ErrorPage := bazaraki.Pages(1)
+		NewBase, ErrorPage := bazaraki.Pages(1, []int{2405, 2408})
 		if ErrorPage != nil {
 			panic(ErrorPage)
 		}
@@ -85,28 +85,37 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 		// Решающее правило. Обновляем БД или нет:
 		if NewP, DelP, UpdP, IsEqual := Checking(&MainBase, NewBase); IsEqual {
 			if len(NewP) != 0 {
-				for _, ads := range NewP {
-					Message := fmt.Sprintf("Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", ads.ID, ads.Price, ads.ID, ads.Slug)
+				var MessageTG string
+				for AdsIndex, ads := range NewP {
+					// Message := fmt.Sprintf("%d. Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", AdsIndex, ads.ID, ads.Price, ads.ID, ads.Slug)
+					Message := fmt.Sprintf("%d. Добавляю товар с ID: %d", AdsIndex, ads.ID)
 					log.Println(Message)
-					notif.Sends(Message)
+					MessageTG += Message + "\n"
 					DB.Incert(NewP2Data(ads))
 				}
+				notif.Sends(MessageTG)
 			}
 			if len(DelP) != 0 {
-				for _, ads := range DelP {
-					Message := fmt.Sprintf("Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", ads.ID, ads.Price, ads.ID, ads.Slug)
+				var MessageTG string
+				for AdsIndex, ads := range DelP {
+					// Message := fmt.Sprintf("%d. Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", AdsIndex, ads.ID, ads.Price, ads.ID, ads.Slug)
+					Message := fmt.Sprintf("%d. Добавляю товар с ID: %d", AdsIndex, ads.ID)
 					log.Println(Message)
-					notif.Sends(Message)
+					MessageTG += Message + "\n"
 					DB.Delete(ads.ID)
 				}
+				notif.Sends(MessageTG)
 			}
 			if len(UpdP) != 0 {
-				for _, ads := range UpdP {
-					Message := fmt.Sprintf("Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", ads.ID, ads.Price, ads.ID, ads.Slug)
+				var MessageTG string
+				for AdsIndex, ads := range UpdP {
+					// Message := fmt.Sprintf("%d. Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", AdsIndex, ads.ID, ads.Price, ads.ID, ads.Slug)
+					Message := fmt.Sprintf("%d. Добавляю товар с ID: %d", AdsIndex, ads.ID)
 					log.Println(Message)
-					notif.Sends(Message)
+					MessageTG += Message + "\n"
 					DB.UpdatePrice(ads.ID, ads.Price)
 				}
+				notif.Sends(MessageTG)
 			}
 		}
 
@@ -129,6 +138,7 @@ func NewP2Data(PageResult bazaraki.ResultsPage) database.Data {
 		Link:       fmt.Sprintf("https://www.bazaraki.com/adv/%d_%s/", PageResult.ID, PageResult.Slug),
 		Price:      Price,
 		Area:       Area,
+		Rubric:     PageResult.Rubric,
 		TimeCreate: TimeCreate,
 	}
 }
