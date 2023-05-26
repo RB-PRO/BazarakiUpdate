@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"time"
 
 	database "github.com/RB-PRO/BazarakiUpdate/pkg/DataBase"
@@ -73,7 +72,8 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 		// Парсим все страницы
 		NewBase, ErrorPage := bazaraki.Pages(1, []int{2405, 2408})
 		if ErrorPage != nil {
-			panic(ErrorPage)
+			// panic(ErrorPage)
+			log.Println("При выполнении возникла ошибка:", ErrorPage)
 		}
 
 		// Сохраняем данные в xlsx
@@ -99,7 +99,7 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 				var MessageTG string
 				for AdsIndex, ads := range DelP {
 					// Message := fmt.Sprintf("%d. Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", AdsIndex, ads.ID, ads.Price, ads.ID, ads.Slug)
-					Message := fmt.Sprintf("%d. Добавляю товар с ID: %d", AdsIndex, ads.ID)
+					Message := fmt.Sprintf("%d. Удаляю товар с ID: %d", AdsIndex, ads.ID)
 					log.Println(Message)
 					MessageTG += Message + "\n"
 					DB.Delete(ads.ID)
@@ -110,7 +110,7 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 				var MessageTG string
 				for AdsIndex, ads := range UpdP {
 					// Message := fmt.Sprintf("%d. Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", AdsIndex, ads.ID, ads.Price, ads.ID, ads.Slug)
-					Message := fmt.Sprintf("%d. Добавляю товар с ID: %d", AdsIndex, ads.ID)
+					Message := fmt.Sprintf("%d. Обновляю товар с ID: %d", AdsIndex, ads.ID)
 					log.Println(Message)
 					MessageTG += Message + "\n"
 					DB.UpdatePrice(ads.ID, ads.Price)
@@ -122,23 +122,4 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 		time.Sleep(time.Minute)
 	}
 
-}
-
-// Функция перевода структура в структуру.
-//   - bazaraki.ResultsPage - структура, получаемая в результате парсинга
-//   - database.Data - структура для заполнения БД
-func NewP2Data(PageResult bazaraki.ResultsPage) database.Data {
-	Price, _ := strconv.ParseFloat(PageResult.Price, 64)            // Цена
-	Area := float64(PageResult.Attrs.AttrsArea)                     // Площадь
-	TimeCreate, _ := time.Parse(time.RFC1123, PageResult.CreatedDt) // Дата создания объявления
-
-	return database.Data{
-		ID:         PageResult.ID,
-		Name:       PageResult.Title,
-		Link:       fmt.Sprintf("https://www.bazaraki.com/adv/%d_%s/", PageResult.ID, PageResult.Slug),
-		Price:      Price,
-		Area:       Area,
-		Rubric:     PageResult.Rubric,
-		TimeCreate: TimeCreate,
-	}
 }

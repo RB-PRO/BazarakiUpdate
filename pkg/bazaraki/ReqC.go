@@ -2,17 +2,22 @@ package bazaraki
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
+
+// Ошибка, возникаемая при выполнении запроса на получение параметра "C"
+var ErrorC_Ads error = errors.New("CAds: ")
 
 // Получить параметр C по запросу
 func CAds(rubric int) (c int, ErrorCAds error) {
-	client := &http.Client{}
+	client := &http.Client{Timeout: time.Minute}
 	req, ErrorNewRequest := http.NewRequest(http.MethodGet, fmt.Sprintf("https://www.bazaraki.com/ajax-items-list/?rubric=%v&lat=34.51120606379305&lng=33.16486102832196&radius=30000&attrs__area_min=50&attrs__area_max=250", rubric), nil)
 	if ErrorNewRequest != nil {
-		return 0, ErrorNewRequest
+		return 0, errors.Join(ErrorC_Ads, ErrorNewRequest)
 	}
 	req.Header.Add("authority", "www.bazaraki.com")
 	req.Header.Add("accept", "*/*")
@@ -29,21 +34,21 @@ func CAds(rubric int) (c int, ErrorCAds error) {
 
 	res, ErrorDo := client.Do(req)
 	if ErrorDo != nil {
-		return 0, ErrorDo
+		return 0, errors.Join(ErrorC_Ads, ErrorDo)
 	}
 	defer res.Body.Close()
 
 	// Получить массив []byte из ответа
 	BodyPage, ErrorReadAll := io.ReadAll(res.Body)
 	if ErrorReadAll != nil {
-		return 0, ErrorReadAll
+		return 0, errors.Join(ErrorC_Ads, ErrorReadAll)
 	}
 
 	// Распарсить полученный json в структуру
 	var DataAds C_Ads
 	ErrorUnmarshal := json.Unmarshal(BodyPage, &DataAds)
 	if ErrorUnmarshal != nil {
-		return 0, ErrorUnmarshal
+		return 0, errors.Join(ErrorC_Ads, ErrorUnmarshal)
 	}
 
 	return DataAds.QueryCount, nil
