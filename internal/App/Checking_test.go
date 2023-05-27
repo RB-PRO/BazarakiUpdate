@@ -10,7 +10,7 @@ import (
 func TestChecking(t *testing.T) {
 
 	Pages := []bazaraki.ResultsPage{
-		{ID: 1, Price: "1.0"}, {ID: 2, Price: "2.0"}, {ID: 3, Price: "3.0"}, {ID: 4, Price: "4.0"}, {ID: 5, Price: "5.0"}, {ID: 6, Price: "6.0"}, {ID: 7, Price: "7.0"}, {ID: 8, Price: "8.0"},
+		{ID: 1, Slug: "1", Price: "1.0"}, {ID: 2, Slug: "2", Price: "2.0"}, {ID: 3, Slug: "3", Price: "3.0"}, {ID: 4, Slug: "4", Price: "4.0"}, {ID: 5, Slug: "5", Price: "5.0"}, {ID: 6, Slug: "6", Price: "6.0"}, {ID: 7, Slug: "7", Price: "7.0"}, {ID: 8, Slug: "8", Price: "8.0"},
 	}
 	LenPages := len(Pages)
 
@@ -19,7 +19,7 @@ func TestChecking(t *testing.T) {
 	AddPage := make([]bazaraki.ResultsPage, len(Pages)-3)
 	copy(AddPage, Pages[:len(Pages)-3])
 	// AddPage = AddPage[:len(AddPage)-3]
-	AddPage = append(AddPage, bazaraki.ResultsPage{ID: 123})
+	AddPage = append(AddPage, bazaraki.ResultsPage{ID: 123, Slug: "123", Price: "123.00"})
 	AddPage[3].Price = "2288.00" // Изменить элемент 4-й
 
 	fmt.Println("\nИсходные данные:")
@@ -57,7 +57,7 @@ func TestChecking(t *testing.T) {
 }
 func prints(data []bazaraki.ResultsPage) {
 	for _, dd := range data {
-		fmt.Print(dd.ID, " ")
+		fmt.Print("{", dd.ID, "-", dd.Slug, "} ")
 	}
 	fmt.Println()
 }

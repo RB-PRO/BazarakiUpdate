@@ -34,6 +34,7 @@ func Checking(PagesResult *[]bazaraki.ResultsPage, AddPages []bazaraki.ResultsPa
 
 // Вычесть множество из множества
 func Difference(a, b []bazaraki.ResultsPage) (diff []bazaraki.ResultsPage, IsEdit bool) {
+
 	m := make(map[int]bool)
 
 	for _, item := range b {
@@ -59,12 +60,13 @@ func UpdateVlookup(a, b []bazaraki.ResultsPage) (diff []bazaraki.ResultsPage, Is
 	type MapObj struct {
 		IsEdit bool
 		Price  string
+		Slug   string
 	}
 
 	m := make(map[int]MapObj)
 
 	for _, item := range b {
-		m[item.ID] = MapObj{IsEdit: true, Price: item.Price}
+		m[item.ID] = MapObj{IsEdit: true, Price: item.Price, Slug: item.Slug}
 	}
 
 	for _, item := range a {

@@ -12,6 +12,7 @@ type Page struct {
 
 // Структура результата по всем страницам
 type ResultsPage struct {
+	Link          string `json:"-"`
 	ID            int    `json:"id"`
 	Title         string `json:"title"`
 	Slug          string `json:"slug"`

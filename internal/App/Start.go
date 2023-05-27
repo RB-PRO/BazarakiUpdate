@@ -64,6 +64,7 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 	for index := range MainBase { // Тут заполняем первый промежуточный массив, с которым и будем сравнивать значения
 		MainBase[index].ID = Base[index].ID
 		MainBase[index].Price = fmt.Sprintf("%.0f.00", Base[index].Price)
+		MainBase[index].Link = Base[index].Link
 	}
 
 	for {
@@ -84,11 +85,12 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 
 		// Решающее правило. Обновляем БД или нет:
 		if NewP, DelP, UpdP, IsEqual := Checking(&MainBase, NewBase); IsEqual {
+			// fmt.Printf("NewP %+v\nDelP %+v\nUpdP %+v\n", NewP, DelP, UpdP)
 			if len(NewP) != 0 {
 				var MessageTG string
 				for AdsIndex, ads := range NewP {
 					// Message := fmt.Sprintf("%d. Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", AdsIndex, ads.ID, ads.Price, ads.ID, ads.Slug)
-					Message := fmt.Sprintf("%d. Добавляю товар с ID: %d", AdsIndex, ads.ID)
+					Message := fmt.Sprintf("%d. Добавляю: %d - https://www.bazaraki.com/adv/%d_%s/", AdsIndex+1, ads.ID, ads.ID, ads.Slug)
 					log.Println(Message)
 					MessageTG += Message + "\n"
 					DB.Incert(NewP2Data(ads))
@@ -99,7 +101,7 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 				var MessageTG string
 				for AdsIndex, ads := range DelP {
 					// Message := fmt.Sprintf("%d. Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", AdsIndex, ads.ID, ads.Price, ads.ID, ads.Slug)
-					Message := fmt.Sprintf("%d. Удаляю товар с ID: %d", AdsIndex, ads.ID)
+					Message := fmt.Sprintf("%d. Удаляю: %d - %s", AdsIndex+1, ads.ID, ads.Link)
 					log.Println(Message)
 					MessageTG += Message + "\n"
 					DB.Delete(ads.ID)
@@ -110,7 +112,7 @@ func Start() { // go run cmd/main/main.go bd token -848128665
 				var MessageTG string
 				for AdsIndex, ads := range UpdP {
 					// Message := fmt.Sprintf("%d. Добавляю товар с ID: %d, ценой %s, и ссылкой https://www.bazaraki.com/adv/%d_%s/", AdsIndex, ads.ID, ads.Price, ads.ID, ads.Slug)
-					Message := fmt.Sprintf("%d. Обновляю товар с ID: %d", AdsIndex, ads.ID)
+					Message := fmt.Sprintf("%d. Обновляю: %d - %s", AdsIndex+1, ads.ID, ads.Link)
 					log.Println(Message)
 					MessageTG += Message + "\n"
 					DB.UpdatePrice(ads.ID, ads.Price)
